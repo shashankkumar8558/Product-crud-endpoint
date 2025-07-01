@@ -18,6 +18,8 @@ class ProductsList(View):
             categoryParam = request.GET.getlist('category');
             soldParam = request.GET.get('sold');
             titleParam = request.GET.get('title');
+            min_price = request.GET.get('minPrice')
+            max_price = request.GET.get('maxPrice')
             print(categoryParam,soldParam,titleParam,"lets see the structure of request in this ");
             
             """ accumulating all the params into a dictionary for passing it as a kwargs in filter() later. """
@@ -29,6 +31,16 @@ class ProductsList(View):
               filters['sold'] = soldParam;
             if titleParam:
               filters['title__icontains'] = titleParam;
+            if min_price:
+                try:
+                    filters['price__gte'] = float(min_price)
+                except ValueError:
+                    return JsonResponse({"error": "minPrice must be a valid number"}, status=400)
+            if max_price:
+                try:
+                    filters['price__lte'] = float(max_price)
+                except ValueError:
+                    return JsonResponse({"error": "maxPrice must be a valid number"}, status=400)
             
             print(filters,"lets see what's in Filters")
             fetchedProduct = Product.objects.filter(**filters);
@@ -47,7 +59,7 @@ class ProductsList(View):
                 "dateOfSale" : fp.dateOfSale
               })
                 
-            return JsonResponse({"message" : "fetched successfully"},safe=False,status=200);
+            return JsonResponse({"message" : "fetched successfully","products" : output},safe=False,status=200);
         except Exception as e:
           return JsonResponse({"error" : str(e)},status=400)
   
