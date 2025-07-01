@@ -8,15 +8,10 @@ import json
 
 
 def home(request):
-  return HttpResponse(content="Aur bhai yeh function hai similar to controller in express")
+  return HttpResponse(content="Thank you for using this API now you can go to /categories for further post and get products")
 
+""" this view will filter out the products based on the params provided, it can handle upto 3 fields for now """
 @method_decorator(csrf_exempt,name='dispatch')
-class FirstCreate(View):
-  
-  
-
-
- """ this view will filter out the products based on the params provided, it can handle upto 3 fields for now """
 class ProductsList(View):
   def get(self,request):
         try:
