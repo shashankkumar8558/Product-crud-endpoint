@@ -15,7 +15,7 @@ This is a simple Django-based backend API that supports:
 
 - Python 3.x
 - Django
-- SQLite (or your configured database)
+- SQLite
 
 ---
 
@@ -44,7 +44,7 @@ Fetch products with filters
 example Request
 GET /products?category=Electronics&sold=true&minPrice=100&title=gam
 
-
+```
 Filters are optional. If you don't pass any, you'll get all products.
 You can pass multiple categories.
 Title search is case-insensitive: title=iphone will match iPhone, IPHONE, etc.
